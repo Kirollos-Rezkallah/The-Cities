@@ -1,5 +1,3 @@
-import React from 'react';
-
 function EmptyMainScreen(): JSX.Element {
   return (
     <div className="page page--gray page--main">

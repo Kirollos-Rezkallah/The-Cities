@@ -1,5 +1,3 @@
-import React from 'react';
-
 function FavoutitesScreen(): JSX.Element {
   return (
     <div className="page">

@@ -1,5 +1,3 @@
-import React from 'react';
-
 function EmptyFavoutitesScreen(): JSX.Element {
   return (
     <div className="page page--favorites-empty">
