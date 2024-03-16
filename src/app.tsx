@@ -1,4 +1,4 @@
-import MainScreen from '../../pages/main-screen/main-screen';
+import MainScreen from '../src/components/mainScreen';
 
 type AppComponentProps = {
   placesCount: number;
