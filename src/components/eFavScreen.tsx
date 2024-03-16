@@ -1,9 +1,12 @@
-function EmptyFavoutitesScreen(): JSX.Element {
+// Functional component representing the empty favorites screen
+function EFavScreen(): JSX.Element {
   return (
     <div className="page page--favorites-empty">
+      {/* Header section */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
+            {/* Left side of the header */}
             <div className="header__left">
               <a className="header__logo-link" href="main.html">
                 <img
@@ -15,8 +18,10 @@ function EmptyFavoutitesScreen(): JSX.Element {
                 />
               </a>
             </div>
+            {/* Navigation section of the header */}
             <nav className="header__nav">
               <ul className="header__nav-list">
+                {/* User profile link */}
                 <li className="header__nav-item user">
                   <a
                     className="header__nav-link header__nav-link--profile"
@@ -29,6 +34,7 @@ function EmptyFavoutitesScreen(): JSX.Element {
                     <span className="header__favorite-count">0</span>
                   </a>
                 </li>
+                {/* Sign out link */}
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
                     <span className="header__signout">Sign out</span>
@@ -40,8 +46,10 @@ function EmptyFavoutitesScreen(): JSX.Element {
         </div>
       </header>
 
+      {/* Main section */}
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
+          {/* Empty favorites section */}
           <section className="favorites favorites--empty">
             <h1 className="visually-hidden">Favorites (empty)</h1>
             <div className="favorites__status-wrapper">
@@ -53,6 +61,8 @@ function EmptyFavoutitesScreen(): JSX.Element {
           </section>
         </div>
       </main>
+
+      {/* Footer section */}
       <footer className="footer">
         <a className="footer__logo-link" href="main.html">
           <img
@@ -68,4 +78,4 @@ function EmptyFavoutitesScreen(): JSX.Element {
   );
 }
 
-export default EmptyFavoutitesScreen;
+export default EFavScreen;

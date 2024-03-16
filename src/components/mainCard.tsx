@@ -1,6 +1,12 @@
+// Import necessary components
+// import React from 'react';
+
+// Define the CityCard component
 function CityCard(): JSX.Element {
+  // Return JSX for CityCard component
   return (
     <article className="cities__card place-card">
+      {/* Image */}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
@@ -12,7 +18,9 @@ function CityCard(): JSX.Element {
           />
         </a>
       </div>
+      {/* Information */}
       <div className="place-card__info">
+        {/* Price and bookmark button */}
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;80</b>
@@ -28,19 +36,23 @@ function CityCard(): JSX.Element {
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
+        {/* Rating */}
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{ width: '80%' }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
+        {/* Name */}
         <h2 className="place-card__name">
           <a href="#">Wood and stone place</a>
         </h2>
+        {/* Type */}
         <p className="place-card__type">Room</p>
       </div>
     </article>
   );
 }
 
+// Export the CityCard component
 export default CityCard;

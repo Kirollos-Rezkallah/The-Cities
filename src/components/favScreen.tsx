@@ -1,9 +1,12 @@
-function FavoutitesScreen(): JSX.Element {
+// Functional component representing the favorites screen
+function FavScreen(): JSX.Element {
   return (
     <div className="page">
+      {/* Header section */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
+            {/* Left side of the header */}
             <div className="header__left">
               <a className="header__logo-link" href="main.html">
                 <img
@@ -15,8 +18,10 @@ function FavoutitesScreen(): JSX.Element {
                 />
               </a>
             </div>
+            {/* Navigation section of the header */}
             <nav className="header__nav">
               <ul className="header__nav-list">
+                {/* User profile link */}
                 <li className="header__nav-item user">
                   <a
                     className="header__nav-link header__nav-link--profile"
@@ -29,6 +34,7 @@ function FavoutitesScreen(): JSX.Element {
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
+                {/* Sign out link */}
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
                     <span className="header__signout">Sign out</span>
@@ -40,12 +46,16 @@ function FavoutitesScreen(): JSX.Element {
         </div>
       </header>
 
+      {/* Main section */}
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
+          {/* Favorites section */}
           <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
+            <h1 className="favorites__title">Saved listings</h1>
+            {/* List of favorite items */}
             <ul className="favorites__list">
               <li className="favorites__locations-items">
+                {/* Location item */}
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     <a className="locations__item-link" href="#">
@@ -53,7 +63,9 @@ function FavoutitesScreen(): JSX.Element {
                     </a>
                   </div>
                 </div>
+                {/* Favorite places */}
                 <div className="favorites__places">
+                  {/* Favorite place card */}
                   <article className="favorites__card place-card">
                     <div className="place-card__mark">
                       <span>Premium</span>
@@ -93,7 +105,7 @@ function FavoutitesScreen(): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{ width: '100%' }}></span>
+                          <span className="width: 100%"></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -104,6 +116,7 @@ function FavoutitesScreen(): JSX.Element {
                     </div>
                   </article>
 
+                  {/* Another favorite place card */}
                   <article className="favorites__card place-card">
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
@@ -153,6 +166,7 @@ function FavoutitesScreen(): JSX.Element {
                 </div>
               </li>
 
+              {/* Another location item and favorite places */}
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
@@ -214,6 +228,8 @@ function FavoutitesScreen(): JSX.Element {
           </section>
         </div>
       </main>
+
+      {/* Footer section */}
       <footer className="footer container">
         <a className="footer__logo-link" href="main.html">
           <img
@@ -229,4 +245,4 @@ function FavoutitesScreen(): JSX.Element {
   );
 }
 
-export default FavoutitesScreen;
+export default FavScreen;

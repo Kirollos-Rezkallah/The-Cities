@@ -1,9 +1,12 @@
-function EmptyMainScreen(): JSX.Element {
+// Functional component representing the empty main screen
+function EMainScreen(): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      {/* Header section */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
+            {/* Left side of the header */}
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active">
                 <img
@@ -15,8 +18,10 @@ function EmptyMainScreen(): JSX.Element {
                 />
               </a>
             </div>
+            {/* Navigation section of the header */}
             <nav className="header__nav">
               <ul className="header__nav-list">
+                {/* User profile link */}
                 <li className="header__nav-item user">
                   <a
                     className="header__nav-link header__nav-link--profile"
@@ -29,6 +34,7 @@ function EmptyMainScreen(): JSX.Element {
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
+                {/* Sign out link */}
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
                     <span className="header__signout">Sign out</span>
@@ -40,11 +46,15 @@ function EmptyMainScreen(): JSX.Element {
         </div>
       </header>
 
+      {/* Main section */}
       <main className="page__main page__main--index page__main--index-empty">
+        {/* Heading */}
         <h1 className="visually-hidden">Cities</h1>
+        {/* Tabs */}
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
+              {/* List of locations */}
               <li className="locations__item">
                 <a className="locations__item-link tabs__item" href="#">
                   <span>Paris</span>
@@ -81,8 +91,10 @@ function EmptyMainScreen(): JSX.Element {
             </ul>
           </section>
         </div>
+        {/* Cities section */}
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">
+            {/* No places available */}
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
@@ -100,4 +112,4 @@ function EmptyMainScreen(): JSX.Element {
   );
 }
 
-export default EmptyMainScreen;
+export default EMainScreen;

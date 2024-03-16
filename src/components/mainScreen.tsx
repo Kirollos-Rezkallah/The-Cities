@@ -1,15 +1,19 @@
-import CityCard from '../../components/city-card/city-card';
+import CityCard from './mainCard';
 
+// Define prop types for the MainScreen component
 type MainScreenProps = {
   placesCount: number;
 };
 
+// MainScreen component
 function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      {/* Header section */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
+            {/* Logo */}
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active">
                 <img
@@ -21,8 +25,10 @@ function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
                 />
               </a>
             </div>
+            {/* Navigation */}
             <nav className="header__nav">
               <ul className="header__nav-list">
+                {/* User profile */}
                 <li className="header__nav-item user">
                   <a
                     className="header__nav-link header__nav-link--profile"
@@ -35,6 +41,7 @@ function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
+                {/* Sign out */}
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
                     <span className="header__signout">Sign out</span>
@@ -46,11 +53,14 @@ function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
         </div>
       </header>
 
+      {/* Main section */}
       <main className="page__main page__main--index">
+        {/* City tabs */}
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
+              {/* City list items */}
               <li className="locations__item">
                 <a className="locations__item-link tabs__item" href="#">
                   <span>Paris</span>
@@ -87,8 +97,11 @@ function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
+              {/* Places */}
               <h2 className="visually-hidden">Places</h2>
+              {/* Display the count of places */}
               <b className="places__found">{`${placesCount} places to stay in Amsterdam`}</b>
+              {/* Sorting options */}
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -115,7 +128,9 @@ function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
+              {/* List of city cards */}
               <div className="cities__places-list places__list tabs__content">
+                {/* Render CityCard component */}
                 <CityCard />
                 <CityCard />
                 <CityCard />
@@ -123,6 +138,7 @@ function MainScreen({ placesCount }: MainScreenProps): JSX.Element {
                 <CityCard />
               </div>
             </section>
+            {/* Right section (map) */}
             <div className="cities__right-section">
               <section className="cities__map map"></section>
             </div>
