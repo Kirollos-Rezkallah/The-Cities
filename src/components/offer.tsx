@@ -1,13 +1,6 @@
-// Import necessary components
-import React from 'react';
-import CityCard from './mainCard';
-
-// Define the OfferScreen component
 function OfferScreen(): JSX.Element {
-  // Return JSX for OfferScreen component
   return (
     <div className="page">
-      {/* Header section */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -22,10 +15,8 @@ function OfferScreen(): JSX.Element {
                 />
               </a>
             </div>
-            {/* Navigation */}
             <nav className="header__nav">
               <ul className="header__nav-list">
-                {/* User profile */}
                 <li className="header__nav-item user">
                   <a
                     className="header__nav-link header__nav-link--profile"
@@ -38,7 +29,6 @@ function OfferScreen(): JSX.Element {
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
-                {/* Sign out */}
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
                     <span className="header__signout">Sign out</span>
@@ -50,13 +40,10 @@ function OfferScreen(): JSX.Element {
         </div>
       </header>
 
-      {/* Main section */}
       <main className="page__main page__main--offer">
-        {/* Offer details */}
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {/* Images */}
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
@@ -101,7 +88,6 @@ function OfferScreen(): JSX.Element {
               </div>
             </div>
           </div>
-          {/* Offer details container */}
           <div className="offer__container container">
             <div className="offer__wrapper">
               <div className="offer__mark">
@@ -125,7 +111,6 @@ function OfferScreen(): JSX.Element {
                 </div>
                 <span className="offer__rating-value rating__value">4.8</span>
               </div>
-              {/* Offer features */}
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
                   Apartment
@@ -141,7 +126,6 @@ function OfferScreen(): JSX.Element {
                 <b className="offer__price-value">&euro;120</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-              {/* Offer amenities */}
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
@@ -157,7 +141,6 @@ function OfferScreen(): JSX.Element {
                   <li className="offer__inside-item">Fridge</li>
                 </ul>
               </div>
-              {/* Host information */}
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
@@ -186,7 +169,6 @@ function OfferScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {/* Offer reviews */}
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot; <span className="reviews__amount">1</span>
@@ -231,41 +213,91 @@ function OfferScreen(): JSX.Element {
                     Your review
                   </label>
                   <div className="reviews__rating-form form__rating">
-                    {/* Review rating */}
-                    {[5, 4, 3, 2, 1].map((rating) => (
-                      <React.Fragment key={rating}>
-                        <input
-                          className="form__rating-input visually-hidden"
-                          name="rating"
-                          value={rating}
-                          id={`${rating}-stars`}
-                          type="radio"
-                        />
-                        <label
-                          htmlFor={`${rating}-stars`}
-                          className="reviews__rating-label form__rating-label"
-                          title={
-                            rating > 3
-                              ? 'good'
-                              : rating === 3
-                              ? 'not bad'
-                              : rating === 2
-                              ? 'badly'
-                              : 'terribly'
-                          }
-                        >
-                          <svg
-                            className="form__star-image"
-                            width="37"
-                            height="33"
-                          >
-                            <use xlinkHref="#icon-star"></use>
-                          </svg>
-                        </label>
-                      </React.Fragment>
-                    ))}
+                    <input
+                      className="form__rating-input visually-hidden"
+                      name="rating"
+                      value="5"
+                      id="5-stars"
+                      type="radio"
+                    />
+                    <label
+                      htmlFor="5-stars"
+                      className="reviews__rating-label form__rating-label"
+                      title="perfect"
+                    >
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
+
+                    <input
+                      className="form__rating-input visually-hidden"
+                      name="rating"
+                      value="4"
+                      id="4-stars"
+                      type="radio"
+                    />
+                    <label
+                      htmlFor="4-stars"
+                      className="reviews__rating-label form__rating-label"
+                      title="good"
+                    >
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
+
+                    <input
+                      className="form__rating-input visually-hidden"
+                      name="rating"
+                      value="3"
+                      id="3-stars"
+                      type="radio"
+                    />
+                    <label
+                      htmlFor="3-stars"
+                      className="reviews__rating-label form__rating-label"
+                      title="not bad"
+                    >
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
+
+                    <input
+                      className="form__rating-input visually-hidden"
+                      name="rating"
+                      value="2"
+                      id="2-stars"
+                      type="radio"
+                    />
+                    <label
+                      htmlFor="2-stars"
+                      className="reviews__rating-label form__rating-label"
+                      title="badly"
+                    >
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
+
+                    <input
+                      className="form__rating-input visually-hidden"
+                      name="rating"
+                      value="1"
+                      id="1-star"
+                      type="radio"
+                    />
+                    <label
+                      htmlFor="1-star"
+                      className="reviews__rating-label form__rating-label"
+                      title="terribly"
+                    >
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
                   </div>
-                  {/* Review text */}
                   <textarea
                     className="reviews__textarea form__textarea"
                     id="review"
@@ -291,21 +323,157 @@ function OfferScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          {/* Map section */}
           <section className="offer__map map"></section>
         </section>
-
-        {/* Other places in the neighborhood */}
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {/* Render CityCard components */}
-              <CityCard />
-              <CityCard />
-              <CityCard />
+              <article className="near-places__card place-card">
+                <div className="near-places__image-wrapper place-card__image-wrapper">
+                  <a href="#">
+                    <img
+                      className="place-card__image"
+                      src="img/room.jpg"
+                      width="260"
+                      height="200"
+                      alt="Place image"
+                    />
+                  </a>
+                </div>
+                <div className="place-card__info">
+                  <div className="place-card__price-wrapper">
+                    <div className="place-card__price">
+                      <b className="place-card__price-value">&euro;80</b>
+                      <span className="place-card__price-text">
+                        &#47;&nbsp;night
+                      </span>
+                    </div>
+                    <button
+                      className="place-card__bookmark-button place-card__bookmark-button--active button"
+                      type="button"
+                    >
+                      <svg
+                        className="place-card__bookmark-icon"
+                        width="18"
+                        height="19"
+                      >
+                        <use xlinkHref="#icon-bookmark"></use>
+                      </svg>
+                      <span className="visually-hidden">In bookmarks</span>
+                    </button>
+                  </div>
+                  <div className="place-card__rating rating">
+                    <div className="place-card__stars rating__stars">
+                      <span style={{ width: '80%' }}></span>
+                      <span className="visually-hidden">Rating</span>
+                    </div>
+                  </div>
+                  <h2 className="place-card__name">
+                    <a href="#">Wood and stone place</a>
+                  </h2>
+                  <p className="place-card__type">Room</p>
+                </div>
+              </article>
+
+              <article className="near-places__card place-card">
+                <div className="near-places__image-wrapper place-card__image-wrapper">
+                  <a href="#">
+                    <img
+                      className="place-card__image"
+                      src="img/apartment-02.jpg"
+                      width="260"
+                      height="200"
+                      alt="Place image"
+                    />
+                  </a>
+                </div>
+                <div className="place-card__info">
+                  <div className="place-card__price-wrapper">
+                    <div className="place-card__price">
+                      <b className="place-card__price-value">&euro;132</b>
+                      <span className="place-card__price-text">
+                        &#47;&nbsp;night
+                      </span>
+                    </div>
+                    <button
+                      className="place-card__bookmark-button button"
+                      type="button"
+                    >
+                      <svg
+                        className="place-card__bookmark-icon"
+                        width="18"
+                        height="19"
+                      >
+                        <use xlinkHref="#icon-bookmark"></use>
+                      </svg>
+                      <span className="visually-hidden">To bookmarks</span>
+                    </button>
+                  </div>
+                  <div className="place-card__rating rating">
+                    <div className="place-card__stars rating__stars">
+                      <span style={{ width: '80%' }}></span>
+                      <span className="visually-hidden">Rating</span>
+                    </div>
+                  </div>
+                  <h2 className="place-card__name">
+                    <a href="#">Canal View Prinsengracht</a>
+                  </h2>
+                  <p className="place-card__type">Apartment</p>
+                </div>
+              </article>
+
+              <article className="near-places__card place-card">
+                <div className="place-card__mark">
+                  <span>Premium</span>
+                </div>
+                <div className="near-places__image-wrapper place-card__image-wrapper">
+                  <a href="#">
+                    <img
+                      className="place-card__image"
+                      src="img/apartment-03.jpg"
+                      width="260"
+                      height="200"
+                      alt="Place image"
+                    />
+                  </a>
+                </div>
+                <div className="place-card__info">
+                  <div className="place-card__price-wrapper">
+                    <div className="place-card__price">
+                      <b className="place-card__price-value">&euro;180</b>
+                      <span className="place-card__price-text">
+                        &#47;&nbsp;night
+                      </span>
+                    </div>
+                    <button
+                      className="place-card__bookmark-button button"
+                      type="button"
+                    >
+                      <svg
+                        className="place-card__bookmark-icon"
+                        width="18"
+                        height="19"
+                      >
+                        <use xlinkHref="#icon-bookmark"></use>
+                      </svg>
+                      <span className="visually-hidden">To bookmarks</span>
+                    </button>
+                  </div>
+                  <div className="place-card__rating rating">
+                    <div className="place-card__stars rating__stars">
+                      <span style={{ width: '80%' }}></span>
+                      <span className="visually-hidden">Rating</span>
+                    </div>
+                  </div>
+                  <h2 className="place-card__name">
+                    <a href="#">Nice, cozy, warm big bed apartment</a>
+                  </h2>
+                  <p className="place-card__type">Apartment</p>
+                </div>
+              </article>
             </div>
           </section>
         </div>
@@ -314,5 +482,4 @@ function OfferScreen(): JSX.Element {
   );
 }
 
-// Export the OfferScreen component
 export default OfferScreen;
