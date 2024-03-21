@@ -1,16 +1,17 @@
 import { Navigate } from 'react-router-dom';
 
-// Define the type for props expected by the PrivateRoute component
+// Define the type for props of the PrivateRoute component
 type PrivateRouteProps = {
-  children: JSX.Element; // JSX element to be rendered as children of PrivateRoute
+  children: JSX.Element; // JSX element as a child component
 };
 
-// PrivateRoute component renders its children if user has access, otherwise redirects to login page
-function PrivRoute({ children }: PrivateRouteProps): JSX.Element {
-  const hasAccess = false; // Variable to indicate whether user has access, set to false by default
+// Define the PrivateRoute component
+function PrivateRoute({ children }: PrivateRouteProps): JSX.Element {
+  // Check if the user has access (dummy implementation)
+  const hasAccess = true;
 
-  // Return either the children or a redirect to login page based on access status
+  // Render the children JSX element if the user has access, otherwise redirect to '/login'
   return hasAccess ? children : <Navigate to={'/login'} />;
 }
 
-export default PrivRoute; // Export the PrivateRoute component for use in other files
+export default PrivateRoute;

@@ -1,17 +1,16 @@
-// Import necessary components
-// import React from 'react';
+import { Link } from 'react-router-dom';
+import CommentForm from './commentSubmission';
 
-// Define the OfferScreen component
 function OfferScreen(): JSX.Element {
-  // Return JSX for OfferScreen component
   return (
     <div className="page">
-      {/* Header */}
       <header className="header">
+        {/* Header section */}
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              {/* Logo linking to home */}
+              <Link to="/" className="header__logo-link">
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -19,12 +18,12 @@ function OfferScreen(): JSX.Element {
                   width="81"
                   height="41"
                 />
-              </a>
+              </Link>
             </div>
             {/* Navigation */}
             <nav className="header__nav">
               <ul className="header__nav-list">
-                {/* User */}
+                {/* User section */}
                 <li className="header__nav-item user">
                   <a
                     className="header__nav-link header__nav-link--profile"
@@ -34,10 +33,13 @@ function OfferScreen(): JSX.Element {
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                    <span className="header__favorite-count">3</span>
+                    {/* Link to favorites */}
+                    <Link to="/favourites">
+                      <span className="header__favorite-count">3</span>
+                    </Link>
                   </a>
                 </li>
-                {/* Sign Out */}
+                {/* Sign out */}
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
                     <span className="header__signout">Sign out</span>
@@ -49,45 +51,28 @@ function OfferScreen(): JSX.Element {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="page__main page__main--offer">
         <section className="offer">
-          {/* Gallery */}
+          {/* Gallery of images */}
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {/* Images */}
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              {/* Additional images */}
-              {/* ... */}
+              {/* Note: Each image is wrapped in an offer__image-wrapper */}
             </div>
           </div>
-          {/* Details */}
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {/* Mark */}
+              {/* Mark indicating premium */}
               <div className="offer__mark">
                 <span>Premium</span>
               </div>
-              {/* Name */}
+              {/* Offer name and bookmark button */}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                {/* Bookmark Button */}
                 <button className="offer__bookmark-button button" type="button">
+                  {/* Bookmark icon */}
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -97,60 +82,77 @@ function OfferScreen(): JSX.Element {
               {/* Rating */}
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
+                  {/* Stars representing rating */}
                   <span style={{ width: '80%' }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
+                {/* Numeric rating */}
                 <span className="offer__rating-value rating__value">4.8</span>
               </div>
               {/* Features */}
-              <ul className="offer__features">
-                {/* Features items */}
-                {/* ... */}
-              </ul>
+              <ul className="offer__features">{/* List of features */}</ul>
               {/* Price */}
               <div className="offer__price">
                 <b className="offer__price-value">&euro;120</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-              {/* Inside */}
+              {/* Inside amenities */}
               <div className="offer__inside">
-                {/* Inside title */}
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                {/* Inside list */}
-                {/* ... */}
+                <ul className="offer__inside-list">
+                  {/* List of inside amenities */}
+                </ul>
               </div>
-              {/* Host */}
+              {/* Host information */}
               <div className="offer__host">
-                {/* Host title */}
                 <h2 className="offer__host-title">Meet the host</h2>
-                {/* Host user */}
-                {/* ... */}
+                <div className="offer__host-user user">
+                  {/* Host avatar */}
+                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                    <img
+                      className="offer__avatar user__avatar"
+                      src="img/avatar-angelina.jpg"
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
+                  </div>
+                  {/* Host name and status */}
+                  <span className="offer__user-name">Angelina</span>
+                  <span className="offer__user-status">Pro</span>
+                </div>
+                {/* Host description */}
+                <div className="offer__description">
+                  {/* Description text */}
+                </div>
               </div>
-              {/* Reviews */}
+              {/* Reviews section */}
               <section className="offer__reviews reviews">
-                {/* Reviews title */}
                 <h2 className="reviews__title">
                   Reviews &middot; <span className="reviews__amount">1</span>
                 </h2>
-                {/* Reviews list */}
-                {/* ... */}
-                {/* Review form */}
-                {/* ... */}
+                <ul className="reviews__list">{/* List of reviews */}</ul>
+                {/* Comment form */}
+                <CommentForm />
               </section>
             </div>
           </div>
-          {/* Map */}
+          {/* Map section */}
           <section className="offer__map map"></section>
         </section>
-        {/* Near Places */}
+        {/* Nearby places section */}
         <div className="container">
           <section className="near-places places">
-            {/* Near Places title */}
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            {/* Near Places list */}
-            {/* ... */}
+            <div className="near-places__list places__list">
+              {/* List of nearby places */}
+              <article className="near-places__card place-card">
+                {/* Place card */}
+              </article>
+              {/* Additional place cards */}
+            </div>
           </section>
         </div>
       </main>
@@ -158,5 +160,4 @@ function OfferScreen(): JSX.Element {
   );
 }
 
-// Export the OfferScreen component
 export default OfferScreen;

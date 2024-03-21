@@ -1,35 +1,45 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from '../src/components/mainScreen'; // Changed MainScreen to Home
-import LoginPage from '../src/components/login'; // Changed LoginScreen to LoginPage
-import FavoritesPage from '../src/components/favScreen'; // Changed FavoutitesScreen to FavoritesPage
-import OfferPage from '../src/components/offer'; // Changed OfferScreen to OfferPage
-import ErrorPage from '../src/components/Routes/error'; // Changed ErrorScreen to ErrorPage
-import ProtectedRoute from '../src/components/Routes/privRoute'; // Changed PrivateRoute to ProtectedRoute
+import MainScreen from './components/mainScreen';
+import LoginScreen from './components/login';
+import FavoutitesScreen from './components/favScreen';
+import OfferScreen from './components/offer';
+import ErrorScreen from './components/Routes/error';
+import PrivateRoute from './components/Routes/privRoute';
+import { Offer } from './types/offer';
 
-type AppProps = {
+type AppComponentProps = {
   placesCount: number;
+  // reviews: Review[];
+  offers: Offer[];
 };
 
-function App({ placesCount }: AppProps): JSX.Element {
+function App({ placesCount, offers }: AppComponentProps): JSX.Element {
+  // Filter offers to get favourites
+  const favourites = offers.filter((o) => o.isFavorite);
   return (
+    // Set up routing using BrowserRouter and Routes
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<ErrorPage />} />{' '}
-        {/* Display ErrorPage for undefined routes */}
-        <Route path="/" element={<Home placesCount={placesCount} />} />{' '}
-        {/* Display Home for root path */}
+        {/* Route for handling unknown paths */}
+        <Route path="*" element={<ErrorScreen />} />
+        {/* Route for the main screen, passing placesCount and offers as props */}
         <Route
-          path="/favorites"
+          path="/"
+          element={<MainScreen placesCount={placesCount} offers={offers} />}
+        />
+        {/* Route for the favourites screen, wrapped in a PrivateRoute component */}
+        <Route
+          path="/favourites"
           element={
-            <ProtectedRoute>
-              <FavoritesPage />
-            </ProtectedRoute>
+            <PrivateRoute>
+              <FavoutitesScreen favourites={favourites} />
+            </PrivateRoute>
           }
         />
-        <Route path="/login" element={<LoginPage />} />{' '}
-        {/* Display LoginPage for /login path */}
-        <Route path="/offer/:id" element={<OfferPage />} />{' '}
-        {/* Display OfferPage with dynamic id */}
+        {/* Route for the login screen */}
+        <Route path="/login" element={<LoginScreen />} />
+        {/* Route for individual offer screens */}
+        <Route path="/offer/:id" element={<OfferScreen />} />
       </Routes>
     </BrowserRouter>
   );
