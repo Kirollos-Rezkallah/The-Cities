@@ -23,7 +23,7 @@ export const offers: Offer[] = [
     isPremium: true,
     rating: 4,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHx8MA%3D%3D',
   },
   {
     id: '2',
@@ -47,7 +47,7 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 3,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHx8MA%3D%3D',
   },
   {
     id: '3',
@@ -71,7 +71,7 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 4.24,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHx8MA%3D%3D',
   },
   {
     id: '4',
@@ -95,6 +95,6 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 2,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHx8MA%3D%3D',
   },
 ];
