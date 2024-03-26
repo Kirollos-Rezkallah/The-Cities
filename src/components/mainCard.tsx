@@ -1,14 +1,16 @@
 // Importing the Link component from react-router-dom and the Offer type from '../types/offer'
 import { Link } from 'react-router-dom';
 import { Offer } from '../types/offer';
+import { getRating } from '../utils';
 
-// Defining the CityCardProps type which describes the props expected by the CityCard component
+// Defining the type for props expected by the CityCard component
 type CityCardProps = {
-  cardInfo: Offer; // An Offer object representing information about a place
+  cardInfo: Offer; // The information about the offer, of type Offer
+  typeClassName: string; // The class name for the type of card, as a string
 };
 
-// Defining the CityCard functional component which takes cardInfo as props
-function CityCard({ cardInfo }: CityCardProps): JSX.Element {
+// Defining the CityCard component
+function CityCard({ cardInfo, typeClassName }: CityCardProps): JSX.Element {
   // Destructuring properties from the cardInfo object
   const {
     id,
@@ -23,16 +25,18 @@ function CityCard({ cardInfo }: CityCardProps): JSX.Element {
 
   // Rendering the CityCard component
   return (
-    <article className="cities__card place-card">
-      {/* Displaying 'Premium' label if the place is premium */}
+    <article className={`${typeClassName} place-card`}>
+      {/* Rendering Premium tag if the property isPremium is true */}
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      {/* Displaying the place image */}
+
+      {/* Rendering the image wrapper with a link */}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
+          {/* Rendering the preview image */}
           <img
             className="place-card__image"
             src={previewImage}
@@ -42,46 +46,50 @@ function CityCard({ cardInfo }: CityCardProps): JSX.Element {
           />
         </a>
       </div>
-      {/* Displaying place information */}
+
+      {/* Rendering the information section of the card */}
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
-          {/* Displaying the price per night */}
+          {/* Rendering the price */}
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          {/* Bookmark button */}
+          {/* Rendering the bookmark button */}
           <button
             className="place-card__bookmark-button place-card__bookmark-button--active button"
             type="button"
           >
-            {/* Displaying bookmark icon if the place is in favorites */}
             <svg className="place-card__bookmark-icon" width="18" height="19">
+              {/* Rendering bookmark icon if the property isFavorite is true */}
               {isFavorite && <use xlinkHref="#icon-bookmark"></use>}
             </svg>
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
-        {/* Displaying the rating of the place */}
+
+        {/* Rendering the rating */}
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            {/* Filling stars based on rating */}
-            <span style={{ width: `${(rating / 5) * 100}%` }}></span>
+            {/* Rendering stars based on rating */}
+            <span style={{ width: getRating(rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        {/* Displaying the title of the place as a link */}
+
+        {/* Rendering the title of the offer with a link */}
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`} state={cardInfo}>
             {title}
           </Link>
         </h2>
-        {/* Displaying the type of the place */}
+
+        {/* Rendering the type of the offer */}
         <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 }
 
-// Exporting the CityCard component
+// Exporting the CityCard component as the default export
 export default CityCard;

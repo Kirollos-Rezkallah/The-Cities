@@ -1,28 +1,29 @@
-// Importing the CityCard component from './mainCard' and the Offer type from '../types/offer'
+// Importing the CityCard component from its file location
 import CityCard from './mainCard';
-import { Offer } from '../types/offer';
-// Importing the useState hook from React (commented out, might be used later)
 
-// Defining the CityCardListProps type which describes the props expected by the CityCardList component
-type CityCardListProps = {
-  cities: Offer[]; // An array of Offer objects representing different cities
-};
+// Importing CityCardListProps type from its file location
+import { CityCardListProps } from '../types/cardList';
 
-// Defining the CityCardList functional component which takes cities as props
-function CityCardList({ cities }: CityCardListProps) {
-  // Initializing state for managing active card (commented out, might be used later)
-  // const [activeCard, setActiveCard] = useState({id: 1});
+// Importing CardType constant from its file location
+import { CardType } from '../const';
 
-  // Rendering the CityCardList component
+// Defining a functional component called CitiesCardList which takes cities as props
+function CitiesCardList({ cities }: CityCardListProps): JSX.Element {
   return (
+    // Rendering a div with classnames 'cities__places-list places__list tabs__content'
     <div className="cities__places-list places__list tabs__content">
-      {/* Mapping over each city and rendering a CityCard component for each */}
+      {/* Mapping through each city in the cities array */}
       {cities.map((city) => (
-        <CityCard key={city.id} cardInfo={city} /> // Each CityCard is given a unique key and passed the city info as props
+        // Rendering CityCard component for each city, passing key, cardInfo, and typeClassName as props
+        <CityCard
+          key={city.id} // Unique key for React to keep track of each CityCard component
+          cardInfo={city} // Passing city information to CityCard component
+          typeClassName={CardType.regular} // Setting type of card (regular) using constant from const.ts
+        />
       ))}
     </div>
   );
 }
 
-// Exporting the CityCardList component
-export default CityCardList;
+// Exporting CitiesCardList component as the default export
+export default CitiesCardList;

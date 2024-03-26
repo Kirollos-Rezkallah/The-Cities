@@ -1,6 +1,7 @@
 // Importing the Offer type from '../types/offer' and the CityCard component from './mainCard'
 import { Offer } from '../types/offer';
 import CityCard from './mainCard';
+import { CardType } from '../const';
 
 // Defining a TypeScript type FavouritesCityBlockProps which describes the props expected by the FavouritesCityBlock component
 type FavouritesCityBlockProps = {
@@ -27,7 +28,11 @@ function FavouritesCityBlock({ city, places }: FavouritesCityBlockProps) {
       <div className="favorites__places">
         {/* Mapping over each place in the 'places' array and rendering a CityCard component for each */}
         {places.map((place) => (
-          <CityCard key={place.id} cardInfo={place} /> // Each CityCard is given a unique key and passed the place info as props
+          <CityCard
+            key={place.id}
+            cardInfo={place}
+            typeClassName={CardType.favourites}
+          /> // Each CityCard is given a unique key and passed the place info as props
         ))}
       </div>
     </li>

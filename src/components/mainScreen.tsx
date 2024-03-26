@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import CitiesMap from './map';
-import CityCardList from './cityCardList';
 import { Offer } from '../types/offer';
+import CitiesCardList from './listNearstCities';
 
 type MainScreenProps = {
   placesCount: number;
@@ -124,7 +124,7 @@ function MainScreen({ placesCount, offers }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <CityCardList cities={offers} />
+              <CitiesCardList cities={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
