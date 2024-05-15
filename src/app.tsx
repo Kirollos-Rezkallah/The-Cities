@@ -7,28 +7,27 @@ import ErrorScreen from './components/Routes/error';
 import PrivateRoute from './components/Routes/privRoute';
 import { Offer } from './types/offer';
 import { Review } from './types/review';
+import { useAppDispatch, useAppSelector } from './hooks';
+import { setOffersList } from './TheStore/action';
 
 type AppComponentProps = {
-  placesCount: number;
   reviews: Review[];
-  offers: Offer[];
 };
 
-function App({ placesCount, offers, reviews }: AppComponentProps): JSX.Element {
-  // Filter offers to get favourites
+function App({ reviews }: AppComponentProps): JSX.Element | null {
+  const offers: Offer[] = useAppSelector((state) => state.offersList);
+  const dispatch = useAppDispatch();
+  dispatch(setOffersList());
+
   const favourites = offers.filter((o) => o.isFavorite);
+  if (offers.length === 0) {
+    return null;
+  }
   return (
-    // Set up routing using BrowserRouter and Routes
     <BrowserRouter>
       <Routes>
-        {/* Route for handling unknown paths */}
         <Route path="*" element={<ErrorScreen />} />
-        {/* Route for the main screen, passing placesCount and offers as props */}
-        <Route
-          path="/"
-          element={<MainScreen placesCount={placesCount} offers={offers} />}
-        />
-        {/* Route for the favourites screen, wrapped in a PrivateRoute component */}
+        <Route path="/" element={<MainScreen />} />
         <Route
           path="/favourites"
           element={
@@ -37,9 +36,7 @@ function App({ placesCount, offers, reviews }: AppComponentProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        {/* Route for the login screen */}
         <Route path="/login" element={<LoginScreen />} />
-        {/* Route for individual offer screens */}
         <Route
           path="/offer/:id"
           element={<OfferScreen reviews={reviews} offers={offers} />}
