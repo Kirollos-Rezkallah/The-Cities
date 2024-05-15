@@ -207,7 +207,7 @@ function OfferScreen({ reviews, offers }: OfferScreenProps): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <NearestCitiesCardList
-              cities={offers.filter((e) => e.id !== '1')}
+              offers={offers.filter((e) => e.id !== '1')}
             />
           </section>
         </div>

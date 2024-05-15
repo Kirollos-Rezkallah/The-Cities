@@ -1,29 +1,35 @@
-// Importing the CityCard component from its file location
+// Importing the CityCard component from the mainCard file
 import CityCard from './mainCard';
-
-// Importing CityCardListProps type from its file location
+// Importing the CityCardListProps type from the cardList file
 import { CityCardListProps } from '../types/cardList';
-
-// Importing CardType constant from its file location
+// Importing the CardType constant from the const file
 import { CardType } from '../const';
+// Importing the getSortedOffers function from the utils file
+import { getSortedOffers } from '../utils';
+// Importing the useAppSelector hook from the hooks file
+import { useAppSelector } from '../hooks';
 
-// Defining a functional component called CitiesCardList which takes cities as props
-function CitiesCardList({ cities }: CityCardListProps): JSX.Element {
+// Defining the CitiesCardList component, which takes offers as a prop
+function CitiesCardList({ offers }: CityCardListProps): JSX.Element {
+  // Retrieving the selectedSortType from the application state
+  const selectedSortType: string = useAppSelector(
+    (state) => state.selectedSortType
+  );
+
+  // Rendering the list of city cards
   return (
-    // Rendering a div with classnames 'cities__places-list places__list tabs__content'
     <div className="cities__places-list places__list tabs__content">
-      {/* Mapping through each city in the cities array */}
-      {cities.map((city) => (
-        // Rendering CityCard component for each city, passing key, cardInfo, and typeClassName as props
+      {/* Mapping through sorted offers and rendering CityCard components */}
+      {getSortedOffers(offers, selectedSortType).map((offer) => (
         <CityCard
-          key={city.id} // Unique key for React to keep track of each CityCard component
-          cardInfo={city} // Passing city information to CityCard component
-          typeClassName={CardType.regular} // Setting type of card (regular) using constant from const.ts
+          key={offer.id} // Unique key for each CityCard
+          cardInfo={offer} // Passing offer data as cardInfo prop
+          typeClassName={CardType.regular} // Setting typeClassName to regular
         />
       ))}
     </div>
   );
 }
 
-// Exporting CitiesCardList component as the default export
+// Exporting the CitiesCardList component as default
 export default CitiesCardList;

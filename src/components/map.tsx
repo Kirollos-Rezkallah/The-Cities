@@ -1,57 +1,64 @@
+// Importing necessary hooks and components from react and leaflet
 import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { Offer, City } from '../types/offer';
+// Importing custom hook to manage map functionality
 import useMap from '../hooks/useMap';
-import { URL_MARKER_DEFAULT } from '../const';
+// Importing default and current marker URLs from constants
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../const';
+// Importing Offer and City types
+import { Offer, City } from '../types/offer';
+// Importing custom app selector hook
+import { useAppSelector } from '../hooks';
 
-// Define the props for the CitiesMap component
+// Defining type for the props passed to the Map component
 type MapProps = {
-  city: City; // Information about the city
-  points: Offer[]; // Array of points to be displayed on the map
+  city: City; // City data
+  points: Offer[]; // Array of offer points
 };
 
-// Define the default custom icon for the markers
+// Creating custom icons for default and current markers
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: URL_MARKER_DEFAULT, // URL for default marker icon
+  iconSize: [40, 40], // Size of the icon
+  iconAnchor: [20, 40], // Anchor point of the icon
 });
 
-// Component to display a map with markers for given points
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT, // URL for current marker icon
+  iconSize: [40, 40], // Size of the icon
+  iconAnchor: [20, 40], // Anchor point of the icon
+});
+
 function CitiesMap({ city, points }: MapProps): JSX.Element {
-  // Reference to the DOM element where the map will be rendered
   const mapRef = useRef(null);
-
-  // Get the map instance using the custom hook
   const map = useMap(mapRef, city);
-
-  // Effect to update the markers when map or points change
+  const selectedPoint: null | { title: string } = useAppSelector(
+    (state) => state.selectedPoint
+  );
   useEffect(() => {
-    // Check if the map instance is available
     if (map) {
-      // Create a layer group for the markers and add it to the map
       const markerLayer = layerGroup().addTo(map);
-
-      // Iterate over the points array and create markers for each point
       points.forEach((point) => {
+        const { location } = point;
         const marker = new Marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude,
+          lat: location.latitude,
+          lng: location.longitude,
         });
-
-        // Set the default custom icon for the marker
-        marker.setIcon(defaultCustomIcon).addTo(markerLayer);
+        marker
+          .setIcon(
+            selectedPoint !== null && point.title === selectedPoint.title
+              ? currentCustomIcon
+              : defaultCustomIcon
+          )
+          .addTo(markerLayer);
       });
 
-      // Clean up function to remove the marker layer when component unmounts
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points]); // Dependencies for the useEffect hook
+  }, [map, points, selectedPoint]);
 
-  // Render the div element that will contain the map
   return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }
 
