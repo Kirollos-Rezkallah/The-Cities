@@ -5,23 +5,21 @@ import FavoutitesScreen from './components/favScreen';
 import OfferScreen from './components/offer';
 import ErrorScreen from './components/Routes/error';
 import PrivateRoute from './components/Routes/privRoute';
-import { Offer } from './types/offer';
+import LoadingScreen from './components/loadingScreen';
 import { Review } from './types/review';
-import { useAppDispatch, useAppSelector } from './hooks';
-import { setOffersList } from './TheStore/action';
+import { useAppSelector } from './hooks';
 
 type AppComponentProps = {
   reviews: Review[];
 };
 
 function App({ reviews }: AppComponentProps): JSX.Element | null {
-  const offers: Offer[] = useAppSelector((state) => state.offersList);
-  const dispatch = useAppDispatch();
-  dispatch(setOffersList());
+  const isOffersDataLoading = useAppSelector(
+    (state) => state.isOffersDataLoading
+  );
 
-  const favourites = offers.filter((o) => o.isFavorite);
-  if (offers.length === 0) {
-    return null;
+  if (isOffersDataLoading) {
+    return <LoadingScreen />;
   }
   return (
     <BrowserRouter>
@@ -32,15 +30,12 @@ function App({ reviews }: AppComponentProps): JSX.Element | null {
           path="/favourites"
           element={
             <PrivateRoute>
-              <FavoutitesScreen favourites={favourites} />
+              <FavoutitesScreen />
             </PrivateRoute>
           }
         />
         <Route path="/login" element={<LoginScreen />} />
-        <Route
-          path="/offer/:id"
-          element={<OfferScreen reviews={reviews} offers={offers} />}
-        />
+        <Route path="/offer/:id" element={<OfferScreen reviews={reviews} />} />
       </Routes>
     </BrowserRouter>
   );

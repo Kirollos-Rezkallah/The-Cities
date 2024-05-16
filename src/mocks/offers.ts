@@ -3,7 +3,7 @@ import { Offer } from '../types/offer';
 export const offers: Offer[] = [
   {
     id: '1',
-    title: 'Блага-Вегас',
+    title: 'First',
     type: 'apartment',
     price: 120,
     city: {
@@ -23,11 +23,11 @@ export const offers: Offer[] = [
     isPremium: true,
     rating: 4,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '2',
-    title: 'Общага',
+    title: 'Second',
     type: 'apartment',
     price: 140,
     city: {
@@ -47,11 +47,11 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 3,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '3',
-    title: 'Лазурный',
+    title: 'Third',
     type: 'apartment',
     price: 80,
     city: {
@@ -71,11 +71,11 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 4.24,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '4',
-    title: 'У Жанны',
+    title: 'Fourth',
     type: 'apartment',
     price: 200,
     city: {
@@ -95,11 +95,11 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 2,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '5',
-    title: 'Мурино',
+    title: 'Sixth',
     type: 'apartment',
     price: 120,
     city: {
@@ -119,6 +119,6 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 2,
     previewImage:
-      'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];

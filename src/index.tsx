@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './/app';
+import App from './app';
+import ErrorMessage from './components/error-message/errorMessage';
+import { reviews } from './mocks/reviews';
 import { Provider } from 'react-redux';
 import { store } from './TheStore';
+import { fetchOffersAction } from './TheStore/apiAction';
 
-import { reviews } from './mocks/reviews';
+store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,6 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage />
       <App reviews={reviews} />
     </Provider>
   </React.StrictMode>

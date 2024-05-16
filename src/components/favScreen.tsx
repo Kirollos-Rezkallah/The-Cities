@@ -1,15 +1,10 @@
 import { Offer } from '../types/offer';
 import FavouritesCityBlock from './favCityBlock';
 import { Link } from 'react-router-dom';
+import { offers } from '../mocks/offers';
 
-// Define the type for props of the FavoutitesScreen component
-type FavoutitesScreenProps = {
-  favourites: Offer[]; // Array of Offer objects representing favourite places
-};
-
-// Define the FavoutitesScreen component
-function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
-  // Map favourite places by city
+function FavoutitesScreen(): JSX.Element {
+  const favourites = offers;
   const favouritesMap = favourites.reduce(
     (acc: Record<string, Offer[]>, place: Offer) => {
       const city = place.city.name;
@@ -18,16 +13,13 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
     },
     {}
   );
-
   return (
     <div className="page">
-      {/* Header section */}
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
               <Link to="/" className="header__logo-link">
-                {/* Logo */}
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -37,7 +29,6 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
                 />
               </Link>
             </div>
-            {/* Navigation */}
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
@@ -49,7 +40,9 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">
+                      {favourites.length}
+                    </span>
                   </a>
                 </li>
                 <li className="header__nav-item">
@@ -63,20 +56,17 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
         </div>
       </header>
 
-      {/* Main section */}
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
-            {/* Title */}
             <h1 className="favorites__title">Saved listing</h1>
-            {/* List of favourite places grouped by city */}
             <ul className="favorites__list">
-              {/* Render each city block */}
               {Object.keys(favouritesMap).map((city) => (
                 <FavouritesCityBlock
                   city={city}
                   places={favouritesMap[city]}
-                  key={favouritesMap[city][0].id} // Set a unique key for each city block
+                  // поправить индексацию
+                  key={favouritesMap[city][0].id}
                 />
               ))}
             </ul>
@@ -84,9 +74,7 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
         </div>
       </main>
 
-      {/* Footer section */}
       <footer className="footer container">
-        {/* Logo */}
         <a className="footer__logo-link" href="main.html">
           <img
             className="footer__logo"
