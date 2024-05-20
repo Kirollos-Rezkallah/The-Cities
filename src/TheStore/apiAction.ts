@@ -1,34 +1,81 @@
-// Importing necessary modules and dependencies.
-import { AxiosInstance } from 'axios'; // Importing AxiosInstance type from Axios.
-import { createAsyncThunk } from '@reduxjs/toolkit'; // Importing createAsyncThunk from Redux Toolkit.
-import { AppDispatch, State } from '../types/state.js'; // Importing AppDispatch and State types.
-import { Offer } from '../types/offer.js'; // Importing Offer type.
-import { loadOffers, setError, setOffersDataLoadingStatus } from './action'; // Importing action creators.
-import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const'; // Importing APIRoute and TIMEOUT_SHOW_ERROR constants.
-import { store } from './'; // Importing the Redux store.
+import { AxiosInstance } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch, State } from '../types/state.js';
+import { Offer } from '../types/offer.js';
+import {
+  loadOffers,
+  setError,
+  setOffersDataLoadingStatus,
+  setAuthorizationStatus,
+} from './action';
+import { saveToken, dropToken } from '../Services/token.js';
+import { APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus } from '../const';
+import { store } from './';
+import { AuthData } from '../types/authorizedData.js';
+import { UserData } from '../types/userData.js';
 
-// Async thunk action to clear error after a timeout.
 export const clearErrorAction = createAsyncThunk('clearError', () => {
-  // Setting a timeout to dispatch setError action with null to clear the error.
   setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
 });
 
-// Async thunk action to fetch offers data.
 export const fetchOffersAction = createAsyncThunk<
-  void, // Payload type of the action.
-  undefined, // Argument type of the action.
+  void,
+  undefined,
   {
-    dispatch: AppDispatch; // Dispatch function type.
-    state: State; // State type.
-    extra: AxiosInstance; // Extra argument type (API instance).
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
   }
 >('fetchQuestions', async (_arg, { dispatch, extra: api }) => {
-  // Dispatching setOffersDataLoadingStatus action to indicate loading state.
   dispatch(setOffersDataLoadingStatus(true));
-  // Making an API request to fetch offers data.
   const { data } = await api.get<Offer[]>(APIRoute.Offers);
-  // Dispatching setOffersDataLoadingStatus action to indicate loading state is completed.
   dispatch(setOffersDataLoadingStatus(false));
-  // Dispatching loadOffers action with the fetched data.
   dispatch(loadOffers(data));
+});
+
+export const checkAuthAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+  try {
+    await api.get(APIRoute.Login);
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+  } catch {
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+});
+
+export const loginAction = createAsyncThunk<
+  void,
+  AuthData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/login', async ({ email, password }, { dispatch, extra: api }) => {
+  const {
+    data: { token },
+  } = await api.post<UserData>(APIRoute.Login, { email, password });
+  saveToken(token);
+  dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+});
+
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/logout', async (_arg, { dispatch, extra: api }) => {
+  await api.delete(APIRoute.Logout);
+  dropToken();
+  dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
 });

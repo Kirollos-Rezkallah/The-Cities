@@ -1,16 +1,16 @@
 import { Navigate } from 'react-router-dom';
+import { AuthorizationStatus } from '../../const';
 
-// Define the type for props of the PrivateRoute component
 type PrivateRouteProps = {
-  children: JSX.Element; // JSX element as a child component
+  children: JSX.Element;
+  authorizationStatus: AuthorizationStatus;
 };
 
-// Define the PrivateRoute component
-function PrivateRoute({ children }: PrivateRouteProps): JSX.Element {
-  // Check if the user has access (dummy implementation)
-  const hasAccess = true;
-
-  // Render the children JSX element if the user has access, otherwise redirect to '/login'
+function PrivateRoute({
+  children,
+  authorizationStatus,
+}: PrivateRouteProps): JSX.Element {
+  const hasAccess = authorizationStatus === AuthorizationStatus.Auth;
   return hasAccess ? children : <Navigate to={'/login'} />;
 }
 

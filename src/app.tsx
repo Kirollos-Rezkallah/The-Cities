@@ -1,24 +1,43 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// Import necessary components and functions from react-router-dom for routing
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+// Import various screen components
 import MainScreen from './components/mainScreen';
-import LoginScreen from './components/login';
-import FavoutitesScreen from './components/favScreen';
 import OfferScreen from './components/offer';
-import ErrorScreen from './components/Routes/error';
+// Import authorization status constants
+import { AuthorizationStatus } from './const';
+// Import the Login screen component
+import LoginScreen from './components/login';
+// Import PrivateRoute component for protected routes
 import PrivateRoute from './components/Routes/privRoute';
+// Import the Favorites screen component
+import FavoutitesScreen from './components/favScreen';
+// Import the Loading screen component
 import LoadingScreen from './components/loadingScreen';
-import { Review } from './types/review';
+// Import the Error screen component
+import ErrorScreen from './components/Routes/error';
+// Import custom hook for accessing the app's state
 import { useAppSelector } from './hooks';
+// Import the Review type definition
+import { Review } from './types/review';
 
+// Define the props type for the AppComponent
 type AppComponentProps = {
+  // Array of reviews to be passed as a prop
   reviews: Review[];
 };
 
 function App({ reviews }: AppComponentProps): JSX.Element | null {
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
   const isOffersDataLoading = useAppSelector(
     (state) => state.isOffersDataLoading
   );
 
-  if (isOffersDataLoading) {
+  if (
+    authorizationStatus === AuthorizationStatus.Unknown ||
+    isOffersDataLoading
+  ) {
     return <LoadingScreen />;
   }
   return (
@@ -29,7 +48,7 @@ function App({ reviews }: AppComponentProps): JSX.Element | null {
         <Route
           path="/favourites"
           element={
-            <PrivateRoute>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <FavoutitesScreen />
             </PrivateRoute>
           }
