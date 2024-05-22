@@ -1,15 +1,17 @@
-// Import the Link component from react-router-dom for navigation
 import { Link } from 'react-router-dom';
-// Import a custom hook for accessing the app's state
-import { useAppSelector } from '../hooks';
-// Import constants related to authorization status
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { AuthorizationStatus } from '../const';
+import { logoutAction } from '../TheStore/apiAction';
 
-// Define the Header component, which returns a JSX.Element
 function Header(): JSX.Element {
   const isAuthed =
     useAppSelector((state) => state.authorizationStatus) ===
     AuthorizationStatus.Auth;
+
+  const dispatch = useAppDispatch();
+  const handleSignOut = () => {
+    dispatch(logoutAction());
+  };
   return (
     <header className="header">
       <div className="container">
@@ -33,7 +35,7 @@ function Header(): JSX.Element {
               <li className="header__nav-item user">
                 <Link
                   className="header__nav-link header__nav-link--profile"
-                  to="favourites"
+                  to="/favourites"
                 >
                   <div className="header__avatar-wrapper user__avatar-wrapper"></div>
 
@@ -52,7 +54,9 @@ function Header(): JSX.Element {
               {isAuthed && (
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
+                    <span className="header__signout" onClick={handleSignOut}>
+                      Sign out
+                    </span>
                   </a>
                 </li>
               )}

@@ -1,15 +1,22 @@
-import { ChangeEvent, useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { sendCommentAction } from '../TheStore/apiAction';
+import { useAppDispatch } from '../hooks';
 
 type Rating = {
   rating: string;
   comment: string;
 };
 
-function CommentForm() {
+type CommentFromProps = {
+  id: string;
+};
+
+function CommentForm({ id }: CommentFromProps) {
   const [formState, setFormState] = useState<Rating>({
     rating: '',
     comment: '',
   });
+  const dispatch = useAppDispatch();
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormState((prevState) => ({
@@ -25,8 +32,30 @@ function CommentForm() {
     }));
   };
 
+  const isValid = () =>
+    formState.comment.trim().length > 49 && formState.rating !== '';
+
+  const handleFromSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(
+      sendCommentAction({
+        id,
+        comment: {
+          comment: formState.comment,
+          rating: Number(formState.rating),
+        },
+      })
+    );
+
+    setFormState((prevState) => ({
+      ...prevState,
+      rating: '',
+      comment: '',
+    }));
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={handleFromSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -143,7 +172,7 @@ function CommentForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!isValid()}
         >
           Submit
         </button>

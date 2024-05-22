@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
 import ErrorMessage from './components/error-message/errorMessage';
-import { reviews } from './mocks/reviews';
 import { Provider } from 'react-redux';
 import { store } from './TheStore';
 import { fetchOffersAction, checkAuthAction } from './TheStore/apiAction';
@@ -18,7 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage />
-      <App reviews={reviews} />
+      <App />
     </Provider>
   </React.StrictMode>
 );

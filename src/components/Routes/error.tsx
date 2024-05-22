@@ -1,12 +1,12 @@
-function ErrorNotFound(): JSX.Element {
+import { Link } from 'react-router-dom';
+
+function ErrorScreen(): JSX.Element {
   return (
-    <section className="error__screen">
-      <h1>
-        404 <span>Not Found</span>
-      </h1>
-      <a href="#">Go Back</a>
-    </section>
+    <div className="container">
+      <h2>404 error</h2>
+      <Link to={'/'}>Go to Main Page</Link>
+    </div>
   );
 }
 
-export default ErrorNotFound;
+export default ErrorScreen;
