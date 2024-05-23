@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app';
-import ErrorMessage from './components/error-message/errorMessage';
+import App from './App/app';
 import { Provider } from 'react-redux';
 import { store } from './TheStore';
-import { fetchOffersAction, checkAuthAction } from './TheStore/apiAction';
-
-store.dispatch(fetchOffersAction());
-store.dispatch(checkAuthAction());
+import HistoryRouter from './components/historyOfRoutes';
+import browserHistory from './types/browserHistory';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,9 +15,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ErrorMessage />
-      <App />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <HistoryRouter history={browserHistory}>
+          <ToastContainer />
+          <App />
+        </HistoryRouter>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );

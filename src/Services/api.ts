@@ -4,9 +4,12 @@ import axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { getToken } from './token';
+import { getToken } from './token.ts';
 import { StatusCodes } from 'http-status-codes';
-import { processErrorHandle } from './errorHandleProcess';
+import { toast } from 'react-toastify';
+
+const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
+const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageType = {
   type: string;
@@ -21,9 +24,6 @@ const StatusCodeMapping: Record<number, boolean> = {
 
 const shouldDisplayError = (response: AxiosResponse) =>
   !!StatusCodeMapping[response.status];
-
-const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
-const REQUEST_TIMEOUT = 5000;
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -47,7 +47,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = error.response.data;
 
-        processErrorHandle(detailMessage.message);
+        toast.warn(detailMessage.message);
       }
 
       throw error;
