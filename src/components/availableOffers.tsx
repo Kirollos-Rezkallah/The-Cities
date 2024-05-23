@@ -3,6 +3,7 @@ import OffersList from './listOffer.tsx';
 import { Offer } from '../types/offer.ts';
 import { getSelectedCity } from '../TheStore';
 import { useAppSelector } from '../hooks/index.ts';
+import { memo } from 'react';
 
 type AvailableOffersProps = {
   offers: Offer[];
@@ -37,4 +38,6 @@ function AvailableOffers({
   );
 }
 
-export default AvailableOffers;
+const AvailableOffersMemo = memo(AvailableOffers);
+
+export default AvailableOffersMemo;
