@@ -35,15 +35,13 @@ function CommonPlaceCard(props: PlaceCardProps): JSX.Element {
         </div>
       )}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={pathCard}>
-          <img
-            className="place-card__image"
-            src={rest.previewImage}
-            width={cardType === 'favorites' ? 150 : 260}
-            height={cardType === 'favorites' ? 110 : 200}
-            alt="Place image"
-          />
-        </Link>
+        <img
+          className="place-card__image"
+          src={rest.previewImage}
+          width={cardType === 'favorites' ? 150 : 260}
+          height={cardType === 'favorites' ? 110 : 200}
+          alt="Place image"
+        />
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
