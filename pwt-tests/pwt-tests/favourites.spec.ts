@@ -1,117 +1,109 @@
 import { test, expect } from '@playwright/test';
 
-test('test bookmark button redirects to login', async ({ page }) => {
-  // Navigate to the page
-  await page.goto('http://localhost:5173');
+test.describe('Favourites', () => {
+  test('Check favourite functionality (unauthenticated user)', async ({
+    page,
+  }) => {
+    // Navigate to the main page
+    await page.goto('http://localhost:5173');
 
-  // Wait for the navigation link to be available
-  await page.waitForSelector('.header__nav-link');
-  const navigationLinkBtn = await page.$('.header__nav-link');
-  const loginButton = await page.$('.header__login');
+    // Wait for the cities cards to load
+    await page.waitForSelector('.cities__card');
 
-  // If not logged in, click the navigation link
-  if (!loginButton) {
-    await navigationLinkBtn?.click();
-  }
+    // Click on the bookmark button of the first city card
+    await page.locator('.bookmark-button').first().click();
 
-  // Wait for the bookmark button to be available
-  await page.waitForSelector('.bookmark-button');
-  const bookmarkButton = await page.$('.bookmark-button');
+    // Wait for redirection to the login page
+    await page.waitForURL('http://localhost:5173/login');
 
-  // Click the bookmark button and wait for the login page to load
-  await Promise.all([
-    page.waitForURL('http://localhost:5173/login'),
-    bookmarkButton?.click(),
-  ]);
+    // Navigate back to the main page
+    await page.goto('http://localhost:5173');
 
-  // Navigate back to the main page
-  await page.goto('http://localhost:5173');
+    // Wait for the cities cards to load again
+    await page.waitForSelector('.cities__card');
 
-  // Click on a city card
-  const citiesCard = await page.$('.cities_card');
-  await citiesCard?.click();
+    // Click on the first city card
+    await page.locator('.cities__card').first().click();
 
-  // Wait for the bookmark button inside the card to be available
-  await page.waitForSelector('.bookmark-button');
-  const bookmarkButtonInsideCard = await page.$('.bookmark-button');
+    // Wait for the offer gallery to load
+    await page.waitForSelector('.offer__gallery');
 
-  // Click the bookmark button inside the card and wait for the login page to load
-  await Promise.all([
-    page.waitForURL('http://localhost:5173/login'),
-    bookmarkButtonInsideCard?.click(),
-  ]);
-});
+    // Click on the bookmark button of the first city card
+    await page.locator('.bookmark-button').first().click();
 
-test('test bookmark with signed in', async ({ page }) => {
-  // Process of logging into the profile
-  await page.goto('http://localhost:5173');
+    // Wait for redirection to the login page
+    await page.waitForURL('http://localhost:5173/login');
 
-  await page.waitForSelector('.header__nav-link');
-  const loginButton = await page.$('.header__login');
+    // Navigate to the favourites page
+    await page.goto('http://localhost:5173/favorites');
 
-  if (loginButton) {
+    // Wait for redirection to the login page
+    await page.waitForURL('http://localhost:5173/login');
+  });
+
+  test('Check favourite functionality (authenticated user)', async ({
+    page,
+  }) => {
+    // Function to check if the favourite button is selected
+    const isFavSelected = async () => {
+      const favBtnClassList = await page
+        .locator('.bookmark-button')
+        .first()
+        .evaluate((el) => [...el.classList]);
+      return favBtnClassList.includes('place-card__bookmark-button--active');
+    };
+
+    // Function to get the favourite count
+    const getFavCount = async () =>
+      parseInt(
+        (await page.locator('.header__favorite-count').textContent()) || '0'
+      );
+
+    // Navigate to the login page
     await page.goto('http://localhost:5173/login');
 
+    // Fill in the login form
     await page.fill('input[name="email"]', 'email@example.com');
     await page.fill('input[name="password"]', 'password123');
 
+    // Submit the login form
     await Promise.all([
-      page.waitForURL('http://localhost:5173'), // Wait for the navigation after form submission
-      page.click('button[type="submit"]'), // Click the "Sign in" button
+      page.waitForURL('http://localhost:5173'), // Wait for redirection after form submission
+      page.click('button[type="submit"]'), // Click on the "Sign in" button
     ]);
-  }
 
-  // Clear favorites
-  await page.goto('http://localhost:5173/favorites');
+    // Wait for the cities cards to load
+    await page.waitForSelector('.cities__card');
 
-  const clickAllBookmarkButtons = async () => {
-    await page.waitForTimeout(500);
-    const bookmarkButtons = await page.$$('.bookmark-button');
+    // Get the initial favourite count
+    const initialFavCounter = await getFavCount();
 
-    for (const button of bookmarkButtons) {
-      await button.click();
-      await page.waitForTimeout(500);
+    // Check if the favourite button was initially selected
+    const wasActive = await isFavSelected();
+
+    // Toggle the favourite button
+    await Promise.all([
+      page.waitForResponse(
+        (resp) =>
+          resp.url().includes('/favorite') &&
+          resp.status() === (wasActive ? 200 : 201)
+      ),
+      page.locator('.bookmark-button').first().click(),
+    ]);
+
+    // Check if the favourite button is now selected
+    const isActive = await isFavSelected();
+
+    // Get the changed favourite count
+    const changedFavCounter = await getFavCount();
+
+    // Compare the favourite count and button state after toggling
+    if (wasActive) {
+      expect(isActive).toBeFalsy();
+      expect(changedFavCounter).toEqual(initialFavCounter - 1);
+    } else {
+      expect(isActive).toBeTruthy();
+      expect(changedFavCounter).toEqual(initialFavCounter + 1);
     }
-  };
-
-  while ((await page.$('.bookmark-button')) !== null) {
-    await clickAllBookmarkButtons();
-  }
-
-  expect(await page.$('.bookmark-button')).toBeNull();
-
-  // Main part of the test
-
-  await page.goto('http://localhost:5173');
-  await page.waitForTimeout(1000);
-
-  await page.waitForSelector('.bookmark-button');
-  const bookmarkButtons = await page.$$('.bookmark-button');
-
-  // Click the first bookmark button
-  await bookmarkButtons[0].click();
-  await page.waitForTimeout(2000);
-
-  // Verify the favorite count has incremented
-  const favCounter = page.locator('.header__favorite-count');
-  const firstFav = await favCounter.textContent();
-  expect(firstFav).not.toBe('0');
-
-  // Click on another city card
-  const citiesCards = await page.$$('.cities__card');
-  await citiesCards[2].click();
-
-  // Wait for the offer container to be available
-  await page.waitForSelector('.offer__container');
-  const bookmarkButtonInsideCard = await page.$('.bookmark-button');
-  await bookmarkButtonInsideCard?.click();
-  await page.waitForTimeout(2000);
-
-  // Verify the favorite count has incremented again
-  const newFavCounter = page.locator('.header__favorite-count');
-  const newFav = await newFavCounter.textContent();
-  console.log(firstFav, newFav);
-  const parsedFav = parseFloat(newFav ?? '0');
-  const expectFav = parseFloat(firstFav ?? '0') + 1;
-  expect(parsedFav).toBe(expectFav);
+  });
 });

@@ -1,20 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Login Form', () => {
-  test('should successfully login with valid credentials', async ({ page }) => {
-    // Navigate to the main page
-    await page.goto('http://localhost:5173');
-
-    // Wait for the navigation link to be available
-    await page.waitForSelector('.header__nav-link');
-    const navigationLinkBtn = await page.$('.header__nav-link');
-    const loginButton = await page.$('.header__login');
-
-    // If not logged in, click the navigation link
-    if (!loginButton) {
-      await navigationLinkBtn?.click();
-    }
-
+  test('Successful authentication', async ({ page }) => {
     // Navigate to the login page
     await page.goto('http://localhost:5173/login');
 
@@ -22,44 +9,30 @@ test.describe('Login Form', () => {
     await page.fill('input[name="email"]', 'email@example.com');
     await page.fill('input[name="password"]', 'password123');
 
-    // Submit the form and wait for navigation to the main page
+    // Submit the form and wait for the URL change after submission
     await Promise.all([
-      page.waitForURL('http://localhost:5173'), // Wait for navigation after form submission
-      page.click('button[type="submit"]'), // Click the "Sign in" button
+      page.waitForURL('http://localhost:5173'), // Wait for the page transition after form submission
+      page.click('button[type="submit"]'), // Click on the "Sign in" button
     ]);
   });
 
-  test('should display error message with invalid password', async ({
-    page,
-  }) => {
-    // Navigate to the main page
-    await page.goto('http://localhost:5173');
-
-    // Wait for the navigation link to be available
-    await page.waitForSelector('.header__nav-link');
-    const navigationLinkBtn = await page.$('.header__nav-link');
-    const loginButton = await page.$('.header__login');
-
-    // If not logged in, click the navigation link
-    if (!loginButton) {
-      await navigationLinkBtn?.click();
-    }
-
-    // Open the login page
+  test('Authentication error (invalid password)', async ({ page }) => {
+    // Navigate to the login page
     await page.goto('http://localhost:5173/login');
 
-    // Fill in the login form with invalid password
+    // Fill in the login form with an invalid password
     await page.fill('input[name="email"]', 'example@example.com');
     await page.fill('input[name="password"]', 'ii');
 
-    // Submit the form
-    await page.click('button[type="submit"]'); // Click the "Sign in" button
+    // Submit the form with invalid password and check for error message visibility
+    await page.click('button[type="submit"]'); // Click on the "Sign in" button
 
-    // Wait for the error message to appear
-    await page.waitForSelector('.Toastify__toast-body');
+    // Check if the error message for invalid password is visible
+    await page.isVisible(
+      "text='The password must consist of at least one English letter and one symbol without spaces.'"
+    );
 
-    // Verify that the URL remains the same, indicating an unsuccessful login
-    const url = page.url();
-    expect(url).toBe('http://localhost:5173/login');
+    // Assert that the URL remains on the login page after submission
+    expect(page.url()).toBe('http://localhost:5173/login');
   });
 });

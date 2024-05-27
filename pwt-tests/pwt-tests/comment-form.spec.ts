@@ -1,102 +1,85 @@
 import { test, expect } from '@playwright/test';
 
-test('comment submission form functionality (signed in)', async ({ page }) => {
-  // Navigate to the page
-  await page.goto('http://localhost:5173');
-
-  // Wait for the navigation link to be available
-  await page.waitForSelector('.header__nav-link');
-  const navigationLinkBtn = await page.$('.header__nav-link');
-  const loginButton = await page.$('.header__login');
-
-  if (loginButton) {
-    // If there is a login element, click on it
-    await navigationLinkBtn?.click();
-  } else {
-    // If there is no login element, look for a logout element and click on it
-    await navigationLinkBtn?.click();
-
-    // Wait for some time to allow the page to refresh after logging out
-    await page.waitForTimeout(2000);
+test.describe('Comment Form', () => {
+  test('Check comment form functionality (authenticated user)', async ({
+    page,
+  }) => {
+    // Define sample review text and rating
+    const REVIEW_TEXT =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    const RATING = 'good';
 
     // Navigate to the login page
     await page.goto('http://localhost:5173/login');
-  }
 
-  // Wait for some time to ensure the page has loaded
-  await page.waitForTimeout(2000);
+    // Fill in the login form
+    await page.fill('input[name="email"]', 'newUser@example.com');
+    await page.fill('input[name="password"]', 'password123');
 
-  // Fill in the login form
-  await page.fill('input[name="email"]', 'email@example.com');
-  await page.fill('input[name="password"]', 'password123');
+    // Submit the login form
+    await page.click('button[type="submit"]');
 
-  // Submit the login form and wait for navigation to the main page
-  await Promise.all([
-    page.waitForURL('http://localhost:5173'),
-    page.click('button[type="submit"]'),
-  ]);
+    // Wait for the cities cards to load
+    await page.waitForSelector('.cities__card');
 
-  // Wait for the cards to load
-  await page.waitForSelector('.cities__card');
-  const firstCard = await page.$('.cities__card');
-  // Click on the first card
-  await firstCard?.click();
-  // Wait for the gallery to load
-  await page.waitForSelector('.offer__gallery');
+    // Click on the first city card
+    await page.locator('.cities__card').first().click();
 
-  // Ensure the comment form is available
-  const commentForm = await page.$('.reviews__form');
-  expect(commentForm).toBeTruthy();
+    // Wait for the offer gallery to load
+    await page.waitForSelector('.offer__gallery');
 
-  // Fill in the comment form
-  const reviewText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-  await page.fill('[name="review"]', reviewText);
+    // Check if the comment form is visible
+    const isFormExist = await page.isVisible('.reviews__form');
+    expect(isFormExist).toBeTruthy();
 
-  // Select a rating
-  const ratingInputs = await page.$$('.form__rating-label');
-  const selectedRating = ratingInputs[0];
-  await selectedRating.click();
+    // Fill in the review text and select rating
+    await page.fill('[name="review"]', REVIEW_TEXT);
+    await page.getByTitle(RATING).click();
 
-  // Submit the comment form
-  await page.click('button[type="submit"]');
-
-  // Wait for some time to ensure the comment is submitted
-  await page.waitForTimeout(3000);
-
-  // Verify that the new review appears
-  const newReview = await page.$('.reviews__item');
-  const newReviewText = await newReview?.$eval('.reviews__text', (el) =>
-    el.textContent?.trim()
-  );
-  expect(newReviewText).toBe(reviewText);
-});
-
-test('comment submission form functionality (signed up)', async ({ page }) => {
-  // Navigate to the page
-  await page.goto('http://localhost:5173');
-
-  // Wait for the navigation link to be available
-  await page.waitForSelector('.header__nav-link');
-  const navigationLinkBtn = await page.$('.header__nav-link');
-  const loginButton = await page.$('.header__login');
-
-  if (!loginButton) {
-    // If there is no login element, assume the user is logged in and navigate to the main page
+    // Submit the review form and wait for response
     await Promise.all([
-      page.waitForURL('http://localhost:5173'),
-      navigationLinkBtn?.click(),
+      page.waitForResponse(
+        (resp) => resp.url().includes('/comments') && resp.status() === 201
+      ),
+      page.click('button[type="submit"]'),
     ]);
-  }
 
-  // Wait for the cards to load
-  await page.waitForSelector('.cities__card');
-  const firstCard = await page.$('.cities__card');
-  // Click on the first card
-  await firstCard?.click();
-  // Wait for the gallery to load
-  await page.waitForSelector('.offer__gallery');
+    // Check if the new review text, author, and rating are as expected
+    const newReviewText = await page
+      .locator('.reviews__text')
+      .first()
+      .textContent();
+    const newReviewAuthor = await page
+      .locator('.reviews__user-name')
+      .first()
+      .textContent();
+    const newReviewRating = await page
+      .locator('.reviews__stars>span')
+      .first()
+      .getAttribute('style');
 
-  // Ensure the comment form is not available for non-logged-in users
-  const commentForm = await page.$('.reviews__form');
-  expect(commentForm).not.toBeTruthy();
+    expect(newReviewText).toBe(REVIEW_TEXT);
+    expect(newReviewAuthor).toBe('newUser');
+    expect(newReviewRating).toBe('width: 80%;');
+  });
+
+  test('Check comment form functionality (unauthenticated user)', async ({
+    page,
+  }) => {
+    // Navigate to the main page
+    await page.goto('http://localhost:5173');
+
+    // Wait for the cities cards to load
+    await page.waitForSelector('.cities__card');
+
+    // Click on the first city card
+    await page.locator('.cities__card').first().click();
+
+    // Wait for the offer gallery to load
+    await page.waitForSelector('.offer__gallery');
+
+    // Check if the comment form is not visible for unauthenticated user
+    const isCommentFormExist = await page.locator('.reviews__form').isVisible();
+    expect(isCommentFormExist).toBeFalsy();
+  });
 });

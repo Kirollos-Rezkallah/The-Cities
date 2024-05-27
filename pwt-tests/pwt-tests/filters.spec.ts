@@ -1,38 +1,39 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 
-test('check filtering of cards', async ({ page }) => {
-  // Navigate to the page with cards
+test('Check city filter functionality', async ({ page }) => {
+  // Open the page with cards
   await page.goto('http://localhost:5173');
 
-  // Wait for the cards to load
-  await page.waitForSelector('.cities__card');
+  // Function to check if an element is active
+  const isActive = async (locator: Locator) => {
+    const classList = await locator.evaluate((el) => [...el.classList]);
+    return classList.includes('tabs__item--active');
+  };
 
-  // Get all location elements
-  const locations = await page.$$('.locations__item-link');
-  for (const location of locations) {
-    // Get the value of the data-test attribute
-    const dataTestValue = await location.getAttribute('data-test');
+  // Wait for the city links to appear
+  await page.waitForSelector('.locations__item-link');
 
-    // Click on the location element
-    await location.click();
+  // Iterate through each city link
+  for (const li of await page.locator('.locations__item-link').all()) {
+    await li.click();
+    const currentCity = await li.textContent();
 
-    // Wait for the page to refresh
-    await page.waitForSelector('.places__found', { state: 'attached' });
-    // Wait for the cards to be re-rendered after filtering
+    // Wait for the cards to reload after filtering
     await page.waitForSelector('.cities__card', {
       state: 'attached',
       timeout: 5000,
     });
 
-    // Get the text content of the places found element
-    const placesFoundText = await page.$eval('.places__found', (el) =>
-      el.textContent?.trim()
-    );
+    // Clicked element should have active class
+    const hasActiveClass = await isActive(li);
+    expect(hasActiveClass).toBeTruthy();
 
-    // Get the last word from the text content
+    // Get the text indicating the number of places found
+    const placesFoundText = await page.locator('.places__found').textContent();
+
+    // Get the last word from the text
     const lastWord = placesFoundText?.split(' ').pop();
-
-    // Check that the value of the data-test attribute matches the last word from places__found
-    expect(dataTestValue).toBe(lastWord);
+    // Check if the value of the data-test attribute matches the last word from places__found
+    expect(currentCity).toBe(lastWord);
   }
 });
