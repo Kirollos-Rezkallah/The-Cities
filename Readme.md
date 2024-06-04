@@ -1,49 +1,99 @@
-# Личный проект «Шесть городов»
+# The Cities
 
-* Студент: [Даниил Козырев](https://up.htmlacademy.ru/univer-js3/4/user/2345859).
-* Наставник: `Неизвестно`.
+## Project Overview
 
----
+The Cities is a web application that allows users to explore and book hotels in six different cities. Users can view hotel details, see their locations on a map, and save their favorite hotels to their profile. The application also includes user authentication for a personalized experience.
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`._
+## Table of Contents
 
----
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [How to View](#how-to-view)
+- [How to Sign Up](#how-to-sign-up)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Author](#author)
 
-### Памятка
+## Technologies Used
 
-#### 1. Зарегистрируйтесь на Гитхабе
+This project was built using the following technologies:
 
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
+- **TypeScript**: For static typing.
+- **React**: For building the user interface.
+- **React Router**: For client-side routing.
+- **React Hooks**: For managing state and side effects.
+- **Redux**: For state management.
+- **Redux Thunk**: For handling asynchronous actions in Redux.
+- **CSS**: For styling the application.
+- **Map Integration**: To display hotel locations on a map.
 
-#### 2. Создайте форк
+## Features
 
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
+- **City Selection**: Choose from six different cities to view available hotels.
+- **Hotel Listings**: See a list of hotels with details like price and name.
+- **Map View**: View the hotel's location on a map.
+- **Favorites**: Save your favorite hotels to your profile.
+- **User Authentication**: Register or log in with a valid email and password.
+- **Performance Optimization**: Optimized rendering and state management for a smooth user experience.
 
-<img width="769" alt="Press 'Fork'" src="https://cloud.githubusercontent.com/assets/259739/20264045/a1ddbf40-aa7a-11e6-9a1a-724a1c0123c8.png">
+## How to View
 
-Получится вот так:
+To explore The Cities, <a href="https://thecities.netlify.app/">click here</a>.
 
-<img width="769" alt="Forked" src="https://cloud.githubusercontent.com/assets/259739/20264122/f63219a6-aa7a-11e6-945a-89818fc7c014.png">
+## How to Sign Up
 
-#### 3. Клонируйте репозиторий на свой компьютер
+To sign up, you need a valid email address (it can be a fake email, as long as it has a valid format) and a password with a minimum of six characters, including letters and numbers.
 
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
+## Installation
 
-<img width="769" alt="SSH" src="https://cloud.githubusercontent.com/assets/259739/20264180/42704126-aa7b-11e6-9ab4-73372b812a53.png">
+Follow these steps to get the project up and running locally:
 
-Клонировать репозиторий можно так:
+1. **Clone the repository:**
 
-```
-git clone SSH-адрес_вашего_форка
-```
+   ```bash
+   git clone https://github.com/Kirollos-Rezkallah/The-Cities
+   ```
 
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
+2. **Navigate to the project directory:**
 
-#### 4. Начинайте обучение!
+   ```bash
+   cd the-cities
+   ```
 
----
+3. **Install the dependencies:**
 
-<a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
+   ```bash
+   npm install
+   ```
 
-Репозиторий создан для обучения на профессиональном онлайн‑курсе «[React. Разработка сложных клиентских приложений](https://htmlacademy.ru/intensive/react)» от [HTML Academy](https://htmlacademy.ru).
+4. **Start the development server:**
+
+   ```bash
+   npm start
+   ```
+
+## Usage
+
+Once the development server is running, you can access the application through the server.
+
+- **Browse Cities**: Select a city to view available hotels.
+- **View Hotel Details**: Click on a hotel to see more details and its location on the map.
+- **Save Favorites**: Click the favorite button to save a hotel to your profile.
+- **User Authentication**: Register or log in to access your saved favorites.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature/YourFeature`).
+6. Open a pull request.
+
+## Author
+
+Developed by Kirollos Rezkallah.  
+Email: [kiroomamdouh@gmail.com](mailto:kiroomamdouh@gmail.com)
